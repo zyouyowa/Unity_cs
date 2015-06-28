@@ -52,7 +52,9 @@ public class PlayerLockOn : MonoBehaviour {
 		lookOn = !lookOn;
 		if (lookOn) {
 			target = lockOnManager.FindNearestObject (transform);
-
+			if (target == null) {
+				lookOn = false;
+			}
 		}
 	}
 

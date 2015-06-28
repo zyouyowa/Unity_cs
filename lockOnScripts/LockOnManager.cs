@@ -28,15 +28,25 @@ public class LockOnManager : MonoBehaviour {
 	}
 
 	public GameObject FindNearestObject (Transform yourself) {
-		int index = 0;
-		float min_dot = Vector3.Dot (yourself.forward, visibleCharacters [0].transform.position - yourself.position);
-		for (int i = 1; i < visibleCharacters.Count; ++i) {
-			float dot = Vector3.Dot (yourself.forward, visibleCharacters [i].transform.position - yourself.position);
-			if (dot < min_dot) {
-				index = i;
-				min_dot = dot;
+		int index = -1;
+		float min_dot = Mathf.Infinity;
+		for (int i = 0; i < visibleCharacters.Count; ++i) {
+			Ray ray = new Ray (yourself.position, visibleCharacters [i].transform.position - yourself.position);
+			if (!Physics.Raycast (ray, Mathf.Infinity, 1 << LayerMask.NameToLayer ("Ground"))) {
+				float dot = Vector3.Dot (yourself.forward, visibleCharacters [i].transform.position - yourself.position);
+				if (dot < min_dot) {
+					index = i;
+					min_dot = dot;
+				}
 			}
 		}
-		return visibleCharacters [index];
+		print (index);
+		if (index == -1) {
+			print ("写ってない");
+			return null;
+		} else {
+			print ("写ってる");
+			return visibleCharacters [index];
+		}
 	}
 }

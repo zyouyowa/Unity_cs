@@ -18,7 +18,6 @@ public class SendVisible : MonoBehaviour {
 
 	private void OnBecameVisible () {
 		if (Camera.current.tag == MAIN_CAMERA_TAG) {
-			print ("写ってる");
 			if (!isRendering)
 				lockOnManager.AddVisibleList (gameObject);
 			isRendering = true;
@@ -29,7 +28,6 @@ public class SendVisible : MonoBehaviour {
 		if (Camera.current != null) {
 			//↑これを入れないとあとで停止時に毎回エラーでてウザい。それだけだから消してもいい
 			if (Camera.current.tag == MAIN_CAMERA_TAG) {
-				print ("写ってない");
 				if (isRendering)
 					lockOnManager.RemoveVisibleList (gameObject);
 				isRendering = false;
